@@ -24,11 +24,23 @@ var (
 	Model = &arModel{g.DB("default").Table(Table).Safe()}
 	// Columns defines and stores column names for table finance.
 	Columns = struct {
-		Id           string //             
-        FinanceName  string // 税务单名称
+		Id             string //
+		FinanceName    string // 财务单名称
+		FinanceProject string // 财务单项目
+		FinanceClass   string // 财务单类别
+		FinancePrice   string // 财务单金额
+		Createby       string // 负责人
+		Create         string // 创建时间
+		UpdateTime     string // 修改时间
 	}{
-		Id:          "id",            
-        FinanceName: "finance_name",
+		Id:             "id",
+		FinanceName:    "finance_name",
+		FinanceProject: "finance_project",
+		FinanceClass:   "finance_class",
+		FinancePrice:   "finance_price",
+		Createby:       "createby",
+		Create:         "create",
+		UpdateTime:     "update_time",
 	}
 )
 

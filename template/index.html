@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>福满居</title>
     <link rel="stylesheet" href="/resource/layui-v2.5.6/layui/css/layui.css">
 
     <script src="/resource/layui-v2.5.6/layui/layui.js"></script>
@@ -22,7 +22,6 @@
         }
 
         #iframe_div {
-
             width: 100%;
             height: 96%;
         }
@@ -95,10 +94,14 @@
     });
 
     $("#warehousing").click(function () {
-        $.get("/warehousing", function (data, status) {
+        $.get("/finance/account-entry", function (data, status) {
             $("#iframe_div").attr("srcdoc", data)
         });
     });
+
+    var ru = function f(data) {
+        $("#iframe_div").attr("srcdoc", data)
+    }
 </script>
 </body>
 </html>

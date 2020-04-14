@@ -8,6 +8,7 @@ import (
 // Controller 控制器结构体。
 // 该结构体用于通过控制器方式注册，未来不再推荐使用控制器路由注册方式。
 type Controller struct {
+	r *ghttp.Request
 	gmvc.Controller
 	ws *ghttp.WebSocket
 }
@@ -21,6 +22,15 @@ func (c *Controller) Index() {
 	c.View.Display("index.html")
 }
 
-func (c *Controller) Warehousing() {
+func (c *Controller) List() {
+	all, _ := FindAll()
+	_ = c.Response.WriteJson(all)
+}
+
+func (c *Controller) AccountEntry() {
 	c.View.Display("finance.html")
+}
+
+func (c *Controller) ToEdit() {
+	c.View.Display("finance_edit.html")
 }

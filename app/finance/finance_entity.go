@@ -7,12 +7,19 @@ package finance
 import (
 	"database/sql"
 	"github.com/gogf/gf/database/gdb"
+	"github.com/gogf/gf/os/gtime"
 )
 
 // Entity is the golang structure for table finance.
 type Entity struct {
-    Id          int64  `orm:"id,primary"   json:"id"`           //             
-    FinanceName string `orm:"finance_name" json:"finance_name"` // 税务单名称  
+	Id             int64       `orm:"id,primary"      json:"id"`
+	FinanceName    string      `orm:"finance_name"    json:"financeName"`    // 财务单名称
+	FinanceProject string      `orm:"finance_project" json:"financeProject"` // 财务单项目
+	FinanceClass   string      `orm:"finance_class"   json:"financeClass"`   // 财务单类别
+	FinancePrice   float64     `orm:"finance_price"   json:"financePrice"`   // 财务单金额
+	Createby       string      `orm:"createby"        json:"createby"`       // 负责人
+	Create         *gtime.Time `orm:"create"          json:"create"`         // 创建时间
+	UpdateTime     *gtime.Time `orm:"update_time"     json:"updateTime"`     // 修改时间
 }
 
 // OmitEmpty sets OPTION_OMITEMPTY option for the model, which automatically filers

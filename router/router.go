@@ -12,6 +12,6 @@ func init() {
 	s.Group("/", func(group *ghttp.RouterGroup) {
 		financeCtrl := new(finance.Controller)
 		group.Middleware(middleware.CORS)
-		group.ALL("/", financeCtrl)
+		group.ALL("/finance/", financeCtrl)
 	})
 }

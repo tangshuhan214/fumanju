@@ -20,6 +20,7 @@ type Entity struct {
 	Createby       string      `orm:"createby"        json:"createby"`       // 负责人
 	Create         *gtime.Time `orm:"create"          json:"create"`         // 创建时间
 	UpdateTime     *gtime.Time `orm:"update_time"     json:"updateTime"`     // 修改时间
+	Remark         string      `orm:"remark"     json:"remark"`              // 备注
 }
 
 // OmitEmpty sets OPTION_OMITEMPTY option for the model, which automatically filers

@@ -15,7 +15,7 @@
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">新增</button>
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">新增、修改</button>
     </div>
 </script>
 
@@ -52,22 +52,7 @@
                 , {field: 'createby', title: '负责人', width: 100}
                 , {field: 'create', title: '创建时间', width: 80, sort: true}
                 , {field: 'updateTime', title: '修改时间', width: 80, sort: true}
-            ]]/*,
-            done: function () {
-                $("[data-field = 'id']").css('display', 'none')
-            }*/
-            /*, data: [{
-                "id": "10001"
-                , "username": "杜甫"
-                , "email": "xianxin@layui.com"
-                , "sex": "男"
-                , "city": "浙江杭州"
-                , "sign": "人生恰似一场修行"
-                , "experience": "116"
-                , "ip": "192.168.0.8"
-                , "logins": "108"
-                , "joinTime": "2016-10-14"
-            }]*/
+            ]]
             //,skin: 'line' //表格风格
             , even: true
             //,page: true //是否显示分页
@@ -81,11 +66,34 @@
             switch (obj.event) {
                 case 'getCheckData':
                     //Ajax获取
-                    $.post('/finance/to-edit', {}, function (str) {
-                        window.parent.ru(str);
+                    layer.open({
+                        type: 2,
+                        area: ['700px', '600px'],
+                        title: '出入账单新增、修改'
+                        , content: '/finance/to-edit',
+                        btn: ['提交', '取消']
+                        , btn1: function (index, layero) {
+                            debugger
+                            $.post("/finance/do-edit", window["layui-layer-iframe" + index].callbackdata(),
+                                function (data, status) {
+                                    alert("数据: \n" + data + "\n状态: " + status);
+                                });
+
+                            //最后关闭弹出层
+                            window.location.reload();
+                            layer.close(index);
+                        },
+                        btn2: function (index, layero) {
+                            window.location.reload();
+                            layer.close(index);
+                        },
+                        cancel: function (layero, index) {
+                            window.location.reload();
+                            layer.closeAll();
+                        }
+
                     });
                     break;
-
             }
             ;
         });

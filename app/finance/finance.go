@@ -45,7 +45,10 @@ func (c *Controller) List() {
 	entity := &[]Entity{}
 	all, _ := g.DB().Table("finance").Limit(c.Request.GetInt("page"), c.Request.GetInt("limit")).All()
 	_ = all.Structs(entity)
-	_ = c.Response.WriteJson(entity)
+	var a = make(map[string]interface{})
+	a["list"] = entity
+	a["count"] = len(all)
+	_ = c.Response.WriteJson(a)
 }
 
 func (c *Controller) AccountEntry() {

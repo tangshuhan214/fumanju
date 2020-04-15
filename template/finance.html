@@ -25,8 +25,9 @@
 </script>
 
 <script>
-    layui.use('table', function () {
-        var table = layui.table;
+    layui.use(['table', 'layer'], function () {
+        var table = layui.table,
+            layer = layui.layer;
 
         //展示已知数据
         table.render({
@@ -53,16 +54,15 @@
                 , {field: 'create', title: '创建时间', width: 80, sort: true}
                 , {field: 'updateTime', title: '修改时间', width: 80, sort: true}
             ]]
-            //,skin: 'line' //表格风格
             , even: true
-            //,page: true //是否显示分页
-            //,limits: [5, 7, 10]
-            //,limit: 5 //每页默认显示的数量
+            ,limits: [20, 40, 60]
+            ,limit: 20 //每页默认显示的数量
         });
 
         //头工具栏事件
         table.on('toolbar(test)', function (obj) {
             var checkStatus = table.checkStatus(obj.config.id);
+            var msg = "";
             switch (obj.event) {
                 case 'getCheckData':
                     //Ajax获取
@@ -73,14 +73,31 @@
                         , content: '/finance/to-edit',
                         btn: ['提交', '取消']
                         , btn1: function (index, layero) {
-                            debugger
-                            $.post("/finance/do-edit", window["layui-layer-iframe" + index].callbackdata(),
+                            $.ajax({
+                                url: "/finance/do-edit",
+                                data: window["layui-layer-iframe" + index].callbackdata(),
+                                type: "Post",
+                                dataType: "json",
+                                success: function (data) {
+                                    msg = data;
+                                    table.reload('test', {
+                                        page: {
+                                            curr: 1 //重新从第 1 页开始
+                                        }
+                                    });
+                                    location.reload();
+                                },
+                                error: function (data) {
+                                    msg = data;
+                                }
+                            });
+                            /*$.post("/finance/do-edit", window["layui-layer-iframe" + index].callbackdata(),
                                 function (data, status) {
                                     alert("数据: \n" + data + "\n状态: " + status);
                                 });
 
                             //最后关闭弹出层
-                            window.location.reload();
+                            window.location.reload();*/
                             layer.close(index);
                         },
                         btn2: function (index, layero) {
@@ -93,9 +110,9 @@
                         }
 
                     });
+                    layer.msg(msg);
                     break;
-            }
-            ;
+            };
         });
 
     });

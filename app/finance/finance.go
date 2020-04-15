@@ -1,7 +1,9 @@
 package finance
 
 import (
+	"fumanju/library/response"
 	idworker "github.com/gitstliu/go-id-worker"
+	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/frame/gmvc"
 	"github.com/gogf/gf/net/ghttp"
 	"github.com/gogf/gf/os/gtime"
@@ -40,8 +42,10 @@ func (c *Controller) Index() {
 }
 
 func (c *Controller) List() {
-	all, _ := FindAll()
-	_ = c.Response.WriteJson(all)
+	entity := &[]Entity{}
+	all, _ := g.DB().Table("finance").Limit(c.Request.GetInt("page"), c.Request.GetInt("limit")).All()
+	_ = all.Structs(entity)
+	_ = c.Response.WriteJson(entity)
 }
 
 func (c *Controller) AccountEntry() {
@@ -65,4 +69,6 @@ func (c *Controller) DoEdit() {
 	} else {
 		Update(entity)
 	}
+	//c.Response.WriteJson("{'msg': '新增、修改成功！' 'code': '0'}")
+	response.JsonExit(c.Request, 0, "新增、修改成功！")
 }

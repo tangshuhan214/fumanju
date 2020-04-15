@@ -83,7 +83,9 @@
         var obj = {};//给obj分配内存
         var form_data = $("#form").serializeArray();
         for (var i = 0; i < form_data.length; i++) {
-            obj[form_data[i].name] = form_data[i]['value'];
+            if (form_data[i]['value'].length != 0) {
+                obj[form_data[i].name] = form_data[i]['value'];
+            }
         }
         return JSON.stringify(obj);
     }
